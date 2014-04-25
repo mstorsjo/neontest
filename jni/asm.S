@@ -76,6 +76,13 @@ transpose:
     //  q8,  q9,  q12, q13
     // q10, q11,  q14, q15
 
+    // The vswp below seems to execute before the previous
+    // vld above have completed. If the "vswp q9, q10" is
+    // changed into "vswp d18, d20; vswp d19, d21" (or the
+    // other way around), or if a "vmov d21, d21" (or something
+    // else that touches q10) is added inbetween here, the
+    // failures go away.
+
     vswp        q9, q10
     vswp       d17, d18
     vswp       d21, d22
